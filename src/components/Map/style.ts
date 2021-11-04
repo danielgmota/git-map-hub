@@ -26,5 +26,14 @@ export const Container = styled.div`
     b {
       text-transform: uppercase;
     }
+
+    a {
+      color: #ff002f;
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
   }
 `;

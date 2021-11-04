@@ -1,6 +1,11 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect } from "react";
 import ReactMapGL, { Marker } from "react-map-gl";
 import img from "../../assets/img/pointer.svg";
+import {
+  githubClientId,
+  githubRedirectUri,
+} from "../../environments/environment";
 import { Container } from "./style";
 
 interface MapProps {
@@ -10,9 +15,14 @@ interface MapProps {
   userAvatar?: any;
 }
 
+const brasilCoord = {
+  lat: -13.224123,
+  log: -52.5952743,
+};
+
 export function Map({ coord, userLogin, userName, userAvatar }: MapProps) {
-  let locLat = coord[1] !== undefined ? coord[1] : 1,
-    locLong = coord[0] !== undefined ? coord[0] : 1;
+  let locLat = coord[1] !== undefined ? coord[1] : brasilCoord.lat,
+    locLong = coord[0] !== undefined ? coord[0] : brasilCoord.log;
 
   const loc = {
     width: "100vh",
@@ -58,6 +68,11 @@ export function Map({ coord, userLogin, userName, userAvatar }: MapProps) {
             <div className="popup">
               <img src={userAvatar} alt={userName} />
               <b>{userLogin}</b>
+              <a
+                href={`https://github.com/login/oauth/authorize?scope=user&client_id=${githubClientId}&redirect_uri=${githubRedirectUri}`}
+              >
+                Login com Github
+              </a>
             </div>
           )}
         </Container>
