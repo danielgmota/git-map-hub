@@ -4,6 +4,7 @@ import {
   apiGetMapboxLocation,
 } from "../../services/apiService";
 import { IGitHubUser } from "../../interfaces/IGitHubUser";
+import { Map } from "../../components/Map";
 
 export function Home() {
   const [userSearch, setUserSearch] = useState<string>("danielgmota");
@@ -34,11 +35,12 @@ export function Home() {
         <button>Pesquisar</button>
       </form>
       {userFound && (
-        <div>
-          {userFound.login}
-          {userFound.location}
-          <img src={userFound.avatar_url} alt={userFound.name} />
-        </div>
+        <Map
+          coord={coordUser}
+          userLogin={userFound?.login}
+          userName={userFound?.name}
+          userAvatar={userFound?.avatar_url}
+        />
       )}
     </div>
   );
