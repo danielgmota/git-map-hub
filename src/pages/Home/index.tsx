@@ -5,6 +5,8 @@ import {
 } from "../../services/apiService";
 import { IGitHubUser } from "../../interfaces/IGitHubUser";
 import { Map } from "../../components/Map";
+import { Container } from "./style";
+import Header from "../../components/Header";
 
 export function Home() {
   const [userSearch, setUserSearch] = useState<string>("danielgmota");
@@ -25,23 +27,26 @@ export function Home() {
   }, [userFound]);
 
   return (
-    <div>
-      <form onSubmit={searchUser}>
-        <input
-          value={userSearch}
-          onChange={(event) => setUserSearch(event.target.value)}
-          placeholder="Digite nome do usuário"
-        />
-        <button>Pesquisar</button>
-      </form>
-      {userFound && (
-        <Map
-          coord={coordUser}
-          userLogin={userFound?.login}
-          userName={userFound?.name}
-          userAvatar={userFound?.avatar_url}
-        />
-      )}
-    </div>
+    <>
+      <Header />
+      <Container>
+        <form onSubmit={searchUser}>
+          <input
+            value={userSearch}
+            onChange={(event) => setUserSearch(event.target.value)}
+            placeholder="Digite nome do usuário"
+          />
+          <button>Pesquisar</button>
+        </form>
+        {userFound && (
+          <Map
+            coord={coordUser}
+            userLogin={userFound?.login}
+            userName={userFound?.name}
+            userAvatar={userFound?.avatar_url}
+          />
+        )}
+      </Container>
+    </>
   );
 }

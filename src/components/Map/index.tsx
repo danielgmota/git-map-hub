@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import ReactMapGL, { Marker } from "react-map-gl";
 import img from "../../assets/img/pointer.svg";
+import { Container } from "./style";
 
 interface MapProps {
   coord?: any;
@@ -49,17 +50,17 @@ export function Map({ coord, userLogin, userName, userAvatar }: MapProps) {
         offsetLeft={-10}
         offsetTop={-10}
       >
-        <div>
-          <button onClick={clickPointer}>
+        <Container>
+          <button onClick={clickPointer} title={userName}>
             <img src={img} alt="Pointer" width="25" height="25" />
           </button>
           {toggle && (
-            <div>
-              <b>{userLogin}</b>
+            <div className="popup">
               <img src={userAvatar} alt={userName} />
+              <b>{userLogin}</b>
             </div>
           )}
-        </div>
+        </Container>
       </Marker>
     </ReactMapGL>
   );
