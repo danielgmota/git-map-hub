@@ -1,16 +1,27 @@
-import { FormEvent, useState } from "react";
-import { apiGetGithubUser } from "../../services/apiService";
+import { FormEvent, useEffect, useState } from "react";
+import {
+  apiGetGithubUser,
+  apiGetMapboxLocation,
+} from "../../services/apiService";
 import { IGitHubUser } from "../../interfaces/IGitHubUser";
 
 export function Home() {
-  const [userSearch, setUserSearch] = useState<string>("");
+  const [userSearch, setUserSearch] = useState<string>("danielgmota");
   const [userFound, setUserFound] = useState<IGitHubUser>();
+  const [coordUser, setCoordUser] = useState([]);
 
   const searchUser = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const res = await apiGetGithubUser(userSearch);
     setUserFound(res);
   };
+
+  useEffect(() => {
+    (async () => {
+      const loc = userFound?.location;
+      setCoordUser(await apiGetMapboxLocation(loc));
+    })();
+  }, [userFound]);
 
   return (
     <div>
