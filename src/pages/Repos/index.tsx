@@ -1,4 +1,5 @@
 import { useHistory } from "react-router-dom";
+import Header from "../../components/Header";
 import { apiPostGithubOauth } from "../../services/apiService";
 
 export default function Repos() {
@@ -9,17 +10,28 @@ export default function Repos() {
 
   if (hasCode) {
     completeUrl = url.split("?code=");
-    history.push("/repos");
+    history.push("/?user=");
 
     requestData(completeUrl[1]);
   }
 
   async function requestData(data: string) {
-    console.log(data);
-
     const res = await apiPostGithubOauth(data);
     console.log(res);
+    //todo: save access_token in storage
   }
 
-  return <div>repos</div>;
+  //todo: get repos public and private
+
+  return (
+    <>
+      <Header />
+      <div>
+        <p>Nome:</p>
+        <p>Usuario:</p>
+        <p>Repositorios:</p>
+        <ul></ul>
+      </div>
+    </>
+  );
 }
