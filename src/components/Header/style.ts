@@ -14,5 +14,10 @@ export const Container = styled.div`
   a {
     margin: 5px 15px;
     color: #fff;
+    text-decoration: none;
+  }
+  a:hover {
+    text-decoration: underline;
+    color: var(--primary-color);
   }
 `;

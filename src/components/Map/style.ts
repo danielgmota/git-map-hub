@@ -28,7 +28,7 @@ export const Container = styled.div`
     }
 
     a {
-      color: #ff002f;
+      color: #00850a;
       text-decoration: none;
     }
 

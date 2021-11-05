@@ -32,5 +32,19 @@ export const Container = styled.div`
         margin: 0 auto;
       }
     }
+    .repo {
+      a {
+        color: var(--primary-color);
+        text-decoration: none;
+      }
+      a:hover {
+        color: var(--primary-color);
+        text-decoration: underline;
+      }
+      a:visited {
+        color: var(--secondary-color);
+        text-decoration: none;
+      }
+    }
   }
 `;
