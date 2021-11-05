@@ -5,6 +5,7 @@ import {
   apiGetMapboxLocation,
 } from "../../services/apiService";
 import { IGitHubUser } from "../../interfaces/IGitHubUser";
+import { IGitHubRepo } from "../../interfaces/IGitHubRepo";
 import { Map } from "../../components/Map";
 import { Container } from "./style";
 import Header from "../../components/Header";
@@ -15,6 +16,7 @@ export function Home() {
   const [userFound, setUserFound] = useState<IGitHubUser>();
   const [coordUser, setCoordUser] = useState([]);
   const [userRepos, setUserRepos] = useState([]);
+  const [searchKeyword, setSearchKeyword] = useState("");
 
   const searchUser = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -64,21 +66,35 @@ export function Home() {
             {userFound && (
               <>
                 <p>Repositórios públicos:</p>
+                <input
+                  value={searchKeyword}
+                  onChange={(event) => setSearchKeyword(event.target.value)}
+                  placeholder="Nome respositório"
+                />
                 <ul>
                   {userRepos &&
-                    userRepos.map((repo, key) => {
-                      const { name, html_url, pushed_at } = repo;
-                      let datePushed = formatDate(pushed_at);
+                    userRepos
+                      .filter((keyword: { name: string }) => {
+                        if (searchKeyword !== "") {
+                          return keyword.name
+                            .toLowerCase()
+                            .includes(searchKeyword.toLowerCase());
+                        }
+                        return keyword.name;
+                      })
+                      .map((repo, key) => {
+                        const { name, html_url, pushed_at } = repo;
+                        let datePushed = formatDate(pushed_at);
 
-                      return (
-                        <li key={key}>
-                          <a href={html_url} target="_blank" rel="noreferrer">
-                            {name}
-                          </a>{" "}
-                          ({datePushed})
-                        </li>
-                      );
-                    })}
+                        return (
+                          <li key={key}>
+                            <a href={html_url} target="_blank" rel="noreferrer">
+                              {name}
+                            </a>{" "}
+                            ({datePushed})
+                          </li>
+                        );
+                      })}
                 </ul>
               </>
             )}
