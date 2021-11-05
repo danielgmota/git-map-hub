@@ -5,7 +5,6 @@ import {
   apiGetMapboxLocation,
 } from "../../services/apiService";
 import { IGitHubUser } from "../../interfaces/IGitHubUser";
-import { IGitHubRepo } from "../../interfaces/IGitHubRepo";
 import { Map } from "../../components/Map";
 import { Container } from "./style";
 import Header from "../../components/Header";
@@ -22,14 +21,33 @@ export function Home() {
     event.preventDefault();
     if (userSearch) {
       const res = await apiGetGithubUser(userSearch);
-      setUserFound(res);
-      listRepos(res.repos_url);
+      if (res !== undefined) {
+        setUserFound(res);
+        fetchRepos(res.repos_url);
+      }
     }
   };
 
-  const listRepos = async (url: string) => {
+  const fetchRepos = async (url: string) => {
     const res = await apiGetGithubRepos(url);
     setUserRepos(res);
+  };
+
+  const sortRecentRepos = () => {
+    const tempRepo = [...userRepos];
+    tempRepo.sort(
+      (a: { pushed_at: number }, b: { pushed_at: number }) =>
+        new Date(b.pushed_at).getTime() - new Date(a.pushed_at).getTime()
+    );
+    setUserRepos(tempRepo);
+  };
+
+  const sortAlphabeticalRepos = () => {
+    const tempRepo = [...userRepos];
+    tempRepo.sort((a: { name: string }, b: { name: string }) =>
+      a.name.localeCompare(b.name)
+    );
+    setUserRepos(tempRepo);
   };
 
   useEffect(() => {
@@ -71,6 +89,10 @@ export function Home() {
                   onChange={(event) => setSearchKeyword(event.target.value)}
                   placeholder="Nome respositório"
                 />
+                <button onClick={sortAlphabeticalRepos}>
+                  Ordenar por nome
+                </button>
+                <button onClick={sortRecentRepos}>Ordenar por recentes</button>
                 <ul>
                   {userRepos &&
                     userRepos
