@@ -6,8 +6,8 @@ export default function Header() {
     <Container>
       <h2>GitMapHub</h2>
       <p>
-        <Link to="/">Home</Link>
-        <Link to="/repos/favoritos">Repo favoritos</Link>
+        <Link to="/">Início</Link>
+        <Link to="/repos/favoritos">Repositórios favoritos</Link>
       </p>
     </Container>
   );

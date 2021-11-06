@@ -64,10 +64,11 @@ export function Home() {
         <form onSubmit={searchUser}>
           <input
             value={userSearch}
+            className="form-theme"
             onChange={(event) => setUserSearch(event.target.value)}
             placeholder="Digite nome do usuário"
           />
-          <button>Pesquisar</button>
+          <button className="form-theme">Pesquisar</button>
         </form>
         <div className="flex">
           <div className="map">
@@ -83,16 +84,26 @@ export function Home() {
           <div className="repo">
             {userFound && (
               <>
-                <p>Repositórios públicos:</p>
-                <input
-                  value={searchKeyword}
-                  onChange={(event) => setSearchKeyword(event.target.value)}
-                  placeholder="Nome respositório"
-                />
-                <button onClick={sortAlphabeticalRepos}>
-                  Ordenar por nome
-                </button>
-                <button onClick={sortRecentRepos}>Ordenar por recentes</button>
+                <h4>Repositórios públicos:</h4>
+                <div className="filters">
+                  <div>
+                    <button
+                      onClick={sortAlphabeticalRepos}
+                      className="form-theme"
+                    >
+                      Ordenar por nome
+                    </button>
+                    <button onClick={sortRecentRepos} className="form-theme">
+                      Ordenar por recentes
+                    </button>
+                  </div>
+                  <input
+                    value={searchKeyword}
+                    className="form-theme"
+                    onChange={(event) => setSearchKeyword(event.target.value)}
+                    placeholder="Nome respositório"
+                  />
+                </div>
                 <ul>
                   {userRepos &&
                     userRepos
